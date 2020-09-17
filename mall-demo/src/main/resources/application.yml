@@ -38,6 +38,7 @@ logging:
   level:
     root: info
     com.macro.mall: debug
+#  config: classpath:logback.xml # 默认名称为 logback.xml
 
 host:
   mall:
