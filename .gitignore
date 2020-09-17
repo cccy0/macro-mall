@@ -1,5 +1,5 @@
 HELP.md
-/target/
+target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -16,6 +16,13 @@ HELP.md
 *.iws
 *.iml
 *.ipr
+**/src/main/resources/application-jdbc.yml
+**/src/main/resources/application-redis.yml
+**/src/main/resources/application-es.yml
+**/src/main/resources/application-mongodb.yml
+**/src/main/resources/application-rabbitmq.yml
+**/src/main/resources/application-oss.yml
+**/src/main/resources/generator.properties
 
 ### NetBeans ###
 /nbproject/private/
