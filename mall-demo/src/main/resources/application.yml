@@ -37,7 +37,7 @@ mybatis:
 logging:
   level:
     root: info
-    com.macro.mall: debug
+    com.github.cccy0.mall: debug
 #  config: classpath:logback.xml # 默认名称为 logback.xml
 
 host:
