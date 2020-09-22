@@ -1,0 +1,36 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+**/src/main/resources/application-jdbc.yml
+**/src/main/resources/application-redis.yml
+**/src/main/resources/application-es.yml
+**/src/main/resources/application-mongodb.yml
+**/src/main/resources/application-rabbitmq.yml
+**/src/main/resources/application-oss.yml
+**/src/main/resources/generator.properties
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### VS Code ###
+.vscode/

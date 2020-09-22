@@ -11,6 +11,7 @@
         <module>mall-common</module>
         <module>mall-mbg</module>
         <module>mall-demo</module>
+        <module>mall-security</module>
     </modules>
     <packaging>pom</packaging>
 
