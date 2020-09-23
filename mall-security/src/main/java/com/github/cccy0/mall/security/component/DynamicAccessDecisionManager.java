@@ -1,6 +1,7 @@
 package com.github.cccy0.mall.security.component;
 
 import cn.hutool.core.collection.CollUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -11,11 +12,11 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 /**
- * 动态权限决策管理器, 用户判断用户是否有访问权限
+ * 动态权限决策管理器, 用户判断用户是否有访问权限 主要验证逻辑就是在这里
  * @author Zhai
  * 2020/9/22 22:40
  */
-
+@ConditionalOnBean(name = "dynamicSecurityService")
 public class DynamicAccessDecisionManager implements AccessDecisionManager {
     /**
      * @param authentication the caller invoking the method (not null)
