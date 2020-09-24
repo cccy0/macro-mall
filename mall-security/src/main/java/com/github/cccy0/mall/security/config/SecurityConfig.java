@@ -1,12 +1,7 @@
 package com.github.cccy0.mall.security.config;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.github.cccy0.mall.security.component.DynamicAccessDecisionManager;
-import com.github.cccy0.mall.security.component.DynamicSecurityFilter;
-import com.github.cccy0.mall.security.component.DynamicSecurityMetadataSource;
-import com.github.cccy0.mall.security.component.DynamicSecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import com.github.cccy0.mall.security.component.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author Zhai
@@ -21,11 +18,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired(required = false)
-    private DynamicSecurityService dynamicSecurityService;
+    private final IgnoreUrlsConfig ignoreUrlsConfig;
+    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private final DynamicSecurityService dynamicSecurityService;
 
-    @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+    public SecurityConfig(IgnoreUrlsConfig ignoreUrlsConfig, JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, DynamicSecurityService dynamicSecurityService) {
+        this.ignoreUrlsConfig = ignoreUrlsConfig;
+        this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
+        this.dynamicSecurityService = dynamicSecurityService;
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -41,8 +42,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // todo 自定义相关未认证或无访问权限处理类
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .accessDeniedHandler(new RestfulAccessDeniedHandler())
+                .and()
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        if (dynamicSecurityService != null) {
+            httpSecurity.addFilterBefore(dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+        }
     }
 
     @Bean
@@ -50,8 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
     public DynamicSecurityFilter dynamicSecurityFilter() {
         DynamicAccessDecisionManager dynamicAccessDecisionManager = new DynamicAccessDecisionManager();
         DynamicSecurityMetadataSource dynamicSecurityMetadataSource = new DynamicSecurityMetadataSource(dynamicSecurityService);

@@ -1,7 +1,6 @@
 package com.github.cccy0.mall.security.component;
 
 import cn.hutool.core.collection.CollUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -16,7 +15,6 @@ import java.util.Collection;
  * @author Zhai
  * 2020/9/22 22:40
  */
-@ConditionalOnBean(name = "dynamicSecurityService")
 public class DynamicAccessDecisionManager implements AccessDecisionManager {
     /**
      * @param authentication the caller invoking the method (not null)
