@@ -1,4 +1,4 @@
-package com.github.cccy0.mall.demo.validator;
+package com.github.cccy0.mall.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

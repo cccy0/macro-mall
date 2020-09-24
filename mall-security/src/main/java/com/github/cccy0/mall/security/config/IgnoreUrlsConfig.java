@@ -12,7 +12,7 @@ import java.util.List;
  * 2020/9/23 23:30
  */
 @Configuration
-@ConfigurationProperties(prefix = "security.ignored")
+@ConfigurationProperties(prefix = "settings.security.ignored")
 public class IgnoreUrlsConfig {
     private List<String> urls = new ArrayList<>();
 
