@@ -29,5 +29,5 @@ spring:
 
 logging:
   level:
-    root: debug
+    root: info
     com.github.cccy0.mall: debug

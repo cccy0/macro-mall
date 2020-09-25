@@ -4,7 +4,7 @@
     <!--引用默认日志配置-->
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <!--使用默认的控制台日志输出实现-->
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+<!--    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>-->
     <!--日志文件保存路径-->
 <!--    <property name="LOG_FILE_PATH" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}}"/>-->
     <!--应用名称-->
@@ -179,7 +179,7 @@
     <logger name="org.hibernate.validator" level="INFO"/>
 
     <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="CONSOLE"/>-->
         <appender-ref ref="FILE_DEBUG"/>
         <appender-ref ref="FILE_ERROR"/>
         <appender-ref ref="LOG_STASH_DEBUG"/>
