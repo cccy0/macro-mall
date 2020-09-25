@@ -17,6 +17,7 @@ import com.github.cccy0.mall.service.UmsAdminCacheService;
 import com.github.cccy0.mall.service.UmsAdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,58 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminLoginLogMapper umsAdminLoginLogMapper;
     private UmsAdminCacheService umsAdminCacheService;
 
+    // region 注入
+
+    @Autowired
+    public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUmsAdminMapper(UmsAdminMapper umsAdminMapper) {
+        this.umsAdminMapper = umsAdminMapper;
+    }
+
+    @Autowired
+    public void setUmsAdminRoleRelationMapper(UmsAdminRoleRelationMapper umsAdminRoleRelationMapper) {
+        this.umsAdminRoleRelationMapper = umsAdminRoleRelationMapper;
+    }
+
+    @Autowired
+    public void setUmsAdminPermissionRelationMapper(UmsAdminPermissionRelationMapper umsAdminPermissionRelationMapper) {
+        this.umsAdminPermissionRelationMapper = umsAdminPermissionRelationMapper;
+    }
+
+    @Autowired
+    public void setUmsAdminRoleRelationDao(UmsAdminRoleRelationDao umsAdminRoleRelationDao) {
+        this.umsAdminRoleRelationDao = umsAdminRoleRelationDao;
+    }
+
+    @Autowired
+    public void setUmsAdminPermissionRelationDao(UmsAdminPermissionRelationDao umsAdminPermissionRelationDao) {
+        this.umsAdminPermissionRelationDao = umsAdminPermissionRelationDao;
+    }
+
+    @Autowired
+    public void setUmsAdminLoginLogMapper(UmsAdminLoginLogMapper umsAdminLoginLogMapper) {
+        this.umsAdminLoginLogMapper = umsAdminLoginLogMapper;
+    }
+
+    @Autowired
+    public void setUmsAdminCacheService(UmsAdminCacheService umsAdminCacheService) {
+        this.umsAdminCacheService = umsAdminCacheService;
+    }
+
+    // endregion
+
     @Override
     public UmsAdmin getAdminByUsername(String username) {
+        // todo: admin管理员逻辑
         return null;
     }
 
