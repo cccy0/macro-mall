@@ -17,16 +17,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 2020/9/24 0:09
  */
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final IgnoreUrlsConfig ignoreUrlsConfig;
-    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-    private final DynamicSecurityService dynamicSecurityService;
+public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
+    protected IgnoreUrlsConfig ignoreUrlsConfig;
+    protected JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    protected DynamicSecurityService dynamicSecurityService;
 
-    public SecurityConfig(IgnoreUrlsConfig ignoreUrlsConfig, JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, DynamicSecurityService dynamicSecurityService) {
-        this.ignoreUrlsConfig = ignoreUrlsConfig;
-        this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
-        this.dynamicSecurityService = dynamicSecurityService;
-    }
+    /**
+     * 注入ignoreUrlsConfig
+     * @param ignoreUrlsConfig ignoreUrlsConfig
+     */
+    public abstract void setIgnoreUrlsConfig(IgnoreUrlsConfig ignoreUrlsConfig);
+
+    /**
+     * 注入jwtAuthenticationTokenFilter
+     * @param jwtAuthenticationTokenFilter jwtAuthenticationTokenFilter
+     */
+    public abstract void setJwtAuthenticationTokenFilter(JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter);
+
+    /**
+     * 注入dynamicSecurityService
+     * @param dynamicSecurityService dynamicSecurityService
+     */
+    public abstract void setDynamicSecurityService(DynamicSecurityService dynamicSecurityService);
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

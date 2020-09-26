@@ -4,6 +4,7 @@ import com.github.cccy0.mall.security.component.DynamicSecurityService;
 import com.github.cccy0.mall.security.component.JwtAuthenticationTokenFilter;
 import com.github.cccy0.mall.security.config.IgnoreUrlsConfig;
 import com.github.cccy0.mall.security.config.SecurityConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
@@ -15,7 +16,21 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MallSecurityConfig extends SecurityConfig {
 
-    public MallSecurityConfig(IgnoreUrlsConfig ignoreUrlsConfig, JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter, DynamicSecurityService dynamicSecurityService) {
-        super(ignoreUrlsConfig, jwtAuthenticationTokenFilter, dynamicSecurityService);
+    @Override
+    @Autowired
+    public void setIgnoreUrlsConfig(IgnoreUrlsConfig ignoreUrlsConfig) {
+        this.ignoreUrlsConfig = ignoreUrlsConfig;
+    }
+
+    @Override
+    @Autowired
+    public void setJwtAuthenticationTokenFilter(JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter) {
+        this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
+    }
+
+    @Override
+    @Autowired
+    public void setDynamicSecurityService(DynamicSecurityService dynamicSecurityService) {
+        this.dynamicSecurityService = dynamicSecurityService;
     }
 }
