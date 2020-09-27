@@ -187,8 +187,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public int update(Long id, UmsAdmin resources) {
         resources.setId(id);
         UmsAdmin umsAdmin = umsAdminMapper.selectByPrimaryKey(id);
-        if (passwordEncoder.matches(resources.getPassword(), umsAdmin.getPassword())) {
-            // 密码相同不需要修改
+        if (StrUtil.equals(umsAdmin.getPassword(), resources.getUsername())) {
+            // 加密之后的密码相同不需要修改(resources的password从数据库查询出来也是加密的)
             resources.setPassword(null);
         } else {
             if (StrUtil.isBlank(resources.getPassword())) {
