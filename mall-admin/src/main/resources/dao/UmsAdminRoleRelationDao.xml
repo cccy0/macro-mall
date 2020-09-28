@@ -10,14 +10,18 @@
         </foreach>
     </insert>
     <select id="getRoleList" resultMap="com.github.cccy0.mall.mapper.UmsRoleMapper.BaseResultMap">
-        select r.*
-        from ums_admin_role_relation ar left join ums_role r on ar.roleId = r.id
-        where ar.admin_id = #{adminId}
+        select
+            r.*
+        from
+            ums_admin_role_relation ar
+            left join ums_role r on ar.role_id = r.id
+        where
+            ar.admin_id = #{adminId}
     </select>
     <select id="getRolePermissionList" resultMap="com.github.cccy0.mall.mapper.UmsPermissionMapper.BaseResultMap">
         select p.*
         from ums_admin_role_relation ar
-        left join ums_role r on ar.roleId = r.id
+        left join ums_role r on ar.role_id = r.id
         left join ums_role_permission_relation rp on r.id = rp.role_id
         left join ums_permission p on rp.permission_id = p.id
         where ar.admin_id = #{adminId} and p.id is not null
@@ -25,7 +29,7 @@
     <select id="getPermissionList" resultMap="com.github.cccy0.mall.mapper.UmsPermissionMapper.BaseResultMap">
         select p.*
         from ums_admin_role_relation ar
-            left join ums_role r on ar.roleId = r.id
+            left join ums_role r on ar.role_id = r.id
             left join ums_role_permission_relation rp on r.id = rp.role_id
             left join ums_permission p on rp.permission_id = p.id
         where ar.admin_id = #{adminId}
