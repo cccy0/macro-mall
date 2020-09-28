@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.cccy0.mall.dao.UmsRolePermissionRelationDao">
+    <!--批量新增回写主键支持-->
+    <insert id="insertList">
+        insert into ums_role_permission_relation (role_id, permission_id) values
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.roleId,jdbcType=BIGINT},
+            #{item.permissionId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <select id="getPermissionList" resultMap="com.github.cccy0.mall.mapper.UmsPermissionMapper.BaseResultMap">
+        select p.*
+        from
+            ums_role_permission_relation rpr
+            left join ums_permission p on rpr.permission_id = p.id
+        where
+            rpr.role_id = #{roleId}
+    </select>
+</mapper>
