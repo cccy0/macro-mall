@@ -158,4 +158,46 @@ public class UmsAdminController {
             return CommonResult.failed();
         }
     }
+
+    @ApiOperation("删除用户")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public CommonResult<Integer> delete(@PathVariable Long id) {
+        int count = umsAdminService.delete(id);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("修改帐号状态")
+    @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.POST)
+    public CommonResult<Integer> updateStatus(@PathVariable Long id, @RequestParam(value = "status") Integer status) {
+        UmsAdmin umsAdmin = new UmsAdmin();
+        umsAdmin.setStatus(status);
+        int count = umsAdminService.update(id, umsAdmin);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("分配角色")
+    @RequestMapping(value = "/role/update", method = RequestMethod.POST)
+    public CommonResult<Integer> updateRole(@RequestParam("adminId") Long adminId,
+                                            @RequestParam("roleIds") List<Long> roleIds) {
+        int count = umsAdminService.updateRole(adminId, roleIds);
+        if (count >= 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("获取用户角色")
+    @RequestMapping(value = "/role/{adminId}", method = RequestMethod.GET)
+    public CommonResult<List<UmsRole>> getRoleList(@PathVariable Long adminId) {
+        List<UmsRole> roleList = umsAdminService.getRoleList(adminId);
+        return CommonResult.success(roleList);
+    }
+
+    // todo:给用户分配+-权限
 }
