@@ -198,7 +198,9 @@ public class UmsAdminServiceImpl implements UmsAdminService {
                 resources.setPassword(passwordEncoder.encode(resources.getPassword()));
             }
         }
-        return umsAdminMapper.updateByPrimaryKeySelective(resources);
+        int count = umsAdminMapper.updateByPrimaryKeySelective(resources);
+        umsAdminCacheService.delAdmin(id);
+        return count;
     }
 
     @Override
@@ -300,6 +302,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         newAdminInfo.setId(umsAdmin.getId());
         newAdminInfo.setPassword(passwordEncoder.encode(param.getNewPassword()));
         umsAdminMapper.updateByPrimaryKeySelective(newAdminInfo);
+        umsAdminCacheService.delAdmin(umsAdmin.getId());
         return 1;
     }
 
