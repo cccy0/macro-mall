@@ -9,6 +9,7 @@ import com.github.cccy0.mall.dto.UmsAdminLoginParam;
 import com.github.cccy0.mall.dto.UmsAdminParam;
 import com.github.cccy0.mall.dto.UpdateAdminPasswordParam;
 import com.github.cccy0.mall.model.UmsAdmin;
+import com.github.cccy0.mall.model.UmsPermission;
 import com.github.cccy0.mall.model.UmsRole;
 import com.github.cccy0.mall.service.UmsAdminService;
 import com.github.cccy0.mall.service.UmsRoleService;
@@ -199,5 +200,21 @@ public class UmsAdminController {
         return CommonResult.success(roleList);
     }
 
-    // todo:给用户分配+-权限
+    @ApiOperation("修改用户+-权限")
+    @RequestMapping(value = "/permission/update", method = RequestMethod.POST)
+    public CommonResult<Integer> updatePermission(@RequestParam Long adminId,
+                                         @RequestParam("permissionIds") List<Long> permissionIds) {
+        int count = umsAdminService.updatePermission(adminId, permissionIds);
+        if (count > 0) {
+            return CommonResult.success(count);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation("获取用户所有权限（包括+-权限）")
+    @RequestMapping(value = "/permission/{adminId}", method = RequestMethod.GET)
+    public CommonResult<List<UmsPermission>> getPermissionList(@PathVariable Long adminId) {
+        List<UmsPermission> permissionList = umsAdminService.getPermissionList(adminId);
+        return CommonResult.success(permissionList);
+    }
 }
