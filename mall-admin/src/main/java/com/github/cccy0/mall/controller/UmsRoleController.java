@@ -4,6 +4,7 @@ import com.github.cccy0.mall.common.api.CommonPage;
 import com.github.cccy0.mall.common.api.CommonResult;
 import com.github.cccy0.mall.model.UmsMenu;
 import com.github.cccy0.mall.model.UmsPermission;
+import com.github.cccy0.mall.model.UmsResource;
 import com.github.cccy0.mall.model.UmsRole;
 import com.github.cccy0.mall.service.UmsRoleService;
 import io.swagger.annotations.Api;
@@ -116,6 +117,20 @@ public class UmsRoleController {
     @RequestMapping(value = "/allocMenu", method = RequestMethod.POST)
     public CommonResult<Integer> allocMenu(@RequestParam Long roleId, @RequestParam List<Long> menuIds) {
         int count = umsRoleService.allocMenu(roleId, menuIds);
+        return CommonResult.success(count);
+    }
+
+    @ApiOperation("获取角色相关资源")
+    @RequestMapping(value = "/listResource/{roleId}", method = RequestMethod.GET)
+    public CommonResult<List<UmsResource>> listResource(@PathVariable Long roleId) {
+        List<UmsResource> roleList = umsRoleService.listResource(roleId);
+        return CommonResult.success(roleList);
+    }
+
+    @ApiOperation("给角色分配资源")
+    @RequestMapping(value = "/allocResource", method = RequestMethod.POST)
+    public CommonResult<Integer> allocResource(@RequestParam Long roleId, @RequestParam List<Long> resourceIds) {
+        int count = umsRoleService.allocResource(roleId, resourceIds);
         return CommonResult.success(count);
     }
 }
