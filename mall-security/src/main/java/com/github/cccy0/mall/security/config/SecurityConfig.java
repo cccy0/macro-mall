@@ -2,6 +2,7 @@ package com.github.cccy0.mall.security.config;
 
 import cn.hutool.core.util.ArrayUtil;
 import com.github.cccy0.mall.security.component.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,7 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected IgnoreUrlsConfig ignoreUrlsConfig;
     protected JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     protected DynamicSecurityService dynamicSecurityService;
+    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
 
     /**
      * 注入ignoreUrlsConfig
@@ -39,6 +41,11 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param dynamicSecurityService dynamicSecurityService
      */
     public abstract void setDynamicSecurityService(DynamicSecurityService dynamicSecurityService);
+
+    @Autowired
+    public void setDynamicSecurityMetadataSource(DynamicSecurityMetadataSource dynamicSecurityMetadataSource) {
+        this.dynamicSecurityMetadataSource = dynamicSecurityMetadataSource;
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -73,7 +80,6 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public DynamicSecurityFilter dynamicSecurityFilter() {
         DynamicAccessDecisionManager dynamicAccessDecisionManager = new DynamicAccessDecisionManager();
-        DynamicSecurityMetadataSource dynamicSecurityMetadataSource = new DynamicSecurityMetadataSource(dynamicSecurityService);
         return new DynamicSecurityFilter(dynamicSecurityMetadataSource, ignoreUrlsConfig, dynamicAccessDecisionManager);
     }
 }

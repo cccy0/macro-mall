@@ -1,6 +1,7 @@
 package com.github.cccy0.mall.security.component;
 
 import cn.hutool.core.util.URLUtil;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * @author Zhai
  * 2020/9/23 22:57
  */
-
+@Configuration
 public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     private static Map<String, ConfigAttribute> configAttributeMap;
     private final DynamicSecurityService dynamicSecurityService;
