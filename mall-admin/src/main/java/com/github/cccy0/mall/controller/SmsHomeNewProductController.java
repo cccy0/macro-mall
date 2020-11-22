@@ -1,6 +1,8 @@
 package com.github.cccy0.mall.controller;
 
+import com.github.cccy0.mall.service.SmsHomeNewProductService;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,4 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "首页新品管理")
 @RequestMapping("/home/newProduct")
 public class SmsHomeNewProductController {
+    private SmsHomeNewProductService homeNewProductService;
+
+    @Autowired
+    public void setHomeNewProductService(SmsHomeNewProductService homeNewProductService) {
+        this.homeNewProductService = homeNewProductService;
+    }
 }
