@@ -1,7 +1,6 @@
 package com.github.cccy0.mall.config;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.OSSClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,8 @@ public class OssConfig {
     private String aliyunOssAccessKeySecret;
 
     @Bean
-    public OSS ossClient() {
-        return new OSSClientBuilder().build(aliyunOssEndPoint, aliyunOssAccessKeyId, aliyunOssAccessKeySecret);
+    public OSSClient ossClient() {
+        return new OSSClient(aliyunOssEndPoint,aliyunOssAccessKeyId,aliyunOssAccessKeySecret);
+//        return new OSSClientBuilder().build(aliyunOssEndPoint, aliyunOssAccessKeyId, aliyunOssAccessKeySecret);
     }
 }
